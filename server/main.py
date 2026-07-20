@@ -5,8 +5,21 @@ from contextlib import asynccontextmanager
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+from typing import Literal
 
-from .database import ROOT, create_task, graph, record_event, rows
+from .database import (
+    ROOT,
+    RelationConflictError,
+    RelationNotFoundError,
+    RelationValidationError,
+    create_relation,
+    create_task,
+    delete_relation,
+    graph,
+    list_relations,
+    record_event,
+    rows,
+)
 from .snapshot import build_snapshot
 
 @asynccontextmanager
@@ -36,6 +49,14 @@ class EventInput(BaseModel):
     payload: dict = Field(default_factory=dict)
 
 
+class RelationInput(BaseModel):
+    from_entity_type: Literal["agent", "goal", "skill", "task", "artifact"]
+    from_entity_id: str = Field(min_length=1, max_length=120)
+    to_entity_type: Literal["agent", "goal", "skill", "task", "artifact"]
+    to_entity_id: str = Field(min_length=1, max_length=120)
+    kind: Literal["owns", "requires", "depends_on", "advances", "uses", "produces", "demonstrates", "contributes_to"]
+
+
 @app.get("/api/graph")
 def get_graph() -> dict:
     return graph()
@@ -63,6 +84,31 @@ def list_goals() -> list[dict]:
 def list_tasks(status: str | None = None) -> list[dict]:
     tasks = rows("tasks")
     return [task for task in tasks if status is None or task["status"] == status]
+
+
+@app.get("/api/relations")
+def get_relations() -> list[dict]:
+    return list_relations()
+
+
+@app.post("/api/relations", status_code=201)
+def post_relation(data: RelationInput) -> dict:
+    try:
+        return create_relation(**data.model_dump())
+    except RelationConflictError as error:
+        raise HTTPException(status_code=409, detail=str(error)) from error
+    except RelationNotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
+    except RelationValidationError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+
+
+@app.delete("/api/relations/{relation_id}")
+def remove_relation(relation_id: str) -> dict:
+    try:
+        return delete_relation(relation_id)
+    except RelationNotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error)) from error
 
 
 @app.post("/api/tasks", status_code=201)

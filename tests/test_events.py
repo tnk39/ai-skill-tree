@@ -11,7 +11,7 @@ def test_event_is_projected_and_mirrored_to_jsonl(isolated_graph):
     task = next(item for item in rows("tasks") if item["id"] == task_id)
     assert task["status"] == "completed"
     events = [json.loads(line) for line in (isolated_graph / "events.jsonl").read_text(encoding="utf-8").splitlines()]
-    assert [event["event_type"] for event in events] == ["task_created", "task_claimed", "task_completed"]
+    assert [event["event_type"] for event in events] == ["task_created", "relation_created", "task_claimed", "task_completed"]
 
 
 def test_skill_usage_changes_only_its_projection(isolated_graph):

@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "agents": [
     {
       "name": "Codex",
@@ -73,11 +73,6 @@
       "kind": "owns"
     },
     {
-      "from": "node-456cd801a9faff5e",
-      "to": "node-96f332445e11fd7f",
-      "kind": "depends_on"
-    },
-    {
       "from": "node-57de4cf40144bdf7",
       "to": "node-f2f3ceeca891101d",
       "kind": "owns"
@@ -88,11 +83,6 @@
       "kind": "owns"
     },
     {
-      "from": "node-c75bb18e28d9940b",
-      "to": "node-afc6ae73a5724881",
-      "kind": "depends_on"
-    },
-    {
       "from": "node-57de4cf40144bdf7",
       "to": "node-afc6ae73a5724881",
       "kind": "owns"
@@ -101,6 +91,16 @@
       "from": "node-57de4cf40144bdf7",
       "to": "node-96f332445e11fd7f",
       "kind": "owns"
+    },
+    {
+      "from": "node-456cd801a9faff5e",
+      "to": "node-96f332445e11fd7f",
+      "kind": "depends_on"
+    },
+    {
+      "from": "node-c75bb18e28d9940b",
+      "to": "node-afc6ae73a5724881",
+      "kind": "depends_on"
     }
   ]
 }

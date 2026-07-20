@@ -9,7 +9,7 @@ def test_public_snapshot_excludes_private_task_fields(isolated_graph):
     output = build_snapshot(isolated_graph / "snapshot.json")
     snapshot = json.loads(output.read_text(encoding="utf-8"))
     raw = output.read_text(encoding="utf-8")
-    assert snapshot["schema_version"] == 2
+    assert snapshot["schema_version"] == 3
     assert "description" not in snapshot["tasks"][0]
     assert "result" not in snapshot["tasks"][0]
     assert "related_skill_id" not in snapshot["tasks"][0]
@@ -17,7 +17,7 @@ def test_public_snapshot_excludes_private_task_fields(isolated_graph):
     assert "skill-static-web" not in raw
     assert all(set(relation) == {"from", "to", "kind"} for relation in snapshot["relationships"])
     assert all(relation["from"].startswith("node-") and relation["to"].startswith("node-") for relation in snapshot["relationships"])
-    assert any(relation["kind"] == "task_relates_to_skill" for relation in snapshot["relationships"])
+    assert any(relation["kind"] == "uses" for relation in snapshot["relationships"])
 
 
 def test_public_snapshot_keeps_only_safe_artifact_fields(isolated_graph):

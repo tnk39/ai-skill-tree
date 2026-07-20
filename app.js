@@ -74,8 +74,9 @@ function nodeRadius(node, relationCount) {
 
 function relationStyle(kind) {
   if (kind === "depends_on") return "edge edge-dependency";
-  if (kind.includes("artifact")) return "edge edge-artifact";
-  if (kind.includes("goal")) return "edge edge-goal";
+  if (["produces", "demonstrates"].includes(kind)) return "edge edge-artifact";
+  if (["requires", "advances", "contributes_to"].includes(kind)) return "edge edge-goal";
+  if (kind === "uses") return "edge edge-uses";
   return "edge";
 }
 

@@ -7,6 +7,7 @@ from hashlib import sha256
 from pathlib import Path
 
 from .database import ROOT, graph
+from .models import RELATION_KINDS
 
 PUBLIC_FILE = ROOT / "public" / "public-snapshot.json"
 
@@ -27,18 +28,6 @@ def _public_record(item: dict, names: tuple[str, ...]) -> dict:
     return record
 
 
-def _ids(value: object) -> list[str]:
-    if isinstance(value, list):
-        return [item for item in value if isinstance(item, str)]
-    if not value:
-        return []
-    try:
-        parsed = json.loads(str(value))
-    except json.JSONDecodeError:
-        return []
-    return [item for item in parsed if isinstance(item, str)] if isinstance(parsed, list) else []
-
-
 def _relationship(source: str | None, target: str | None, kind: str) -> dict | None:
     source_id, target_id = _public_id(source), _public_id(target)
     if not source_id or not target_id:
@@ -48,31 +37,19 @@ def _relationship(source: str | None, target: str | None, kind: str) -> dict | N
 
 def _relationships(data: dict) -> list[dict]:
     records: list[dict] = []
-
-    def add(source: str | None, target: str | None, kind: str) -> None:
-        relation = _relationship(source, target, kind)
+    for item in data["relations"]:
+        if item.get("kind") not in RELATION_KINDS:
+            continue
+        relation = _relationship(item.get("from_entity_id"), item.get("to_entity_id"), item["kind"])
         if relation:
             records.append(relation)
-
-    for skill in data["skills"]:
-        add(skill.get("owner_agent_id"), skill.get("id"), "owns")
-        for dependency in _ids(skill.get("dependencies")):
-            add(skill.get("id"), dependency, "depends_on")
-    for task in data["tasks"]:
-        add(task.get("id"), task.get("related_skill_id"), "task_relates_to_skill")
-        add(task.get("id"), task.get("related_goal_id"), "task_relates_to_goal")
-    for artifact in data["artifacts"]:
-        for goal_id in _ids(artifact.get("related_goal_ids")):
-            add(artifact.get("id"), goal_id, "artifact_relates_to_goal")
-        for skill_id in _ids(artifact.get("related_skill_ids")):
-            add(artifact.get("id"), skill_id, "artifact_relates_to_skill")
     return records
 
 
 def build_snapshot(destination: Path = PUBLIC_FILE) -> Path:
     data = graph()
     snapshot = {
-        "schema_version": 2,
+        "schema_version": 3,
         "agents": [_public_record(x, ("name", "type", "role", "status")) for x in data["agents"]],
         "goals": [_public_record(x, ("title", "priority", "status")) for x in data["goals"]],
         "skills": [_public_record(x, ("name", "category", "status", "confidence", "success_rate", "usage_count")) for x in data["skills"]],

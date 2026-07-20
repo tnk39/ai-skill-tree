@@ -23,7 +23,7 @@ def test_ui_includes_graph_filters_and_task_entry():
     assert 'data-filter="skill"' in html
     assert 'id="task-form"' in html
     assert 'id="activity-list"' in html
-    assert "graphData={agents:[],goals:[],skills:[],tasks:[],artifacts:[],events:[]}" in script
+    assert "relations: []" in script
 
 
 def test_public_ui_has_a_local_svg_graph_without_external_assets():

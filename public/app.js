@@ -46,7 +46,7 @@ function nodePositions(nodes, width, height) {
 }
 
 function nodeRadius(node, relationCount) { if (node.kind === "goal") return 25; if (node.kind === "agent") return 23; return Math.min(25, 15 + relationCount * 2 + (node.usage_count || 0)); }
-function relationStyle(kind) { if (kind === "depends_on") return "edge edge-dependency"; if (kind.includes("artifact")) return "edge edge-artifact"; if (kind.includes("goal")) return "edge edge-goal"; return "edge"; }
+function relationStyle(kind) { if (kind === "depends_on") return "edge edge-dependency"; if (["produces", "demonstrates"].includes(kind)) return "edge edge-artifact"; if (["requires", "advances", "contributes_to"].includes(kind)) return "edge edge-goal"; if (kind === "uses") return "edge edge-uses"; return "edge"; }
 
 function renderDetails() {
   details.replaceChildren(); const selected = state.nodes.find((node) => node.id === state.selectedId);

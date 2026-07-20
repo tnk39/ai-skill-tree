@@ -25,6 +25,7 @@ h2 { font-size: 20px; margin: 12px 0 6px; }
 .edge { stroke: #58718d; stroke-width: 2; opacity: .72; }
 .edge-dependency { stroke: #ffd166; stroke-dasharray: 7 5; }
 .edge-artifact { stroke: #f58c68; }
+.edge-uses { stroke: #ffd166; stroke-dasharray: 3 3; }
 .edge-goal { stroke: #85b8ff; stroke-width: 2.5; }
 .node { cursor: pointer; outline: none; }
 .node > :first-child { stroke: rgba(237, 245, 255, .66); stroke-width: 1.5; transition: filter .15s ease, stroke-width .15s ease; }

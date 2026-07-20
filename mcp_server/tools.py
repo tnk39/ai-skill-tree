@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from server.database import create_task, graph, record_event, rows
+from server.database import create_artifact, create_relation, create_task, delete_relation, graph, list_relations, record_event, rows
 from server.snapshot import build_snapshot
 
 
@@ -43,7 +43,26 @@ def update_skill_status(skill_id: str, status: str, actor: str = "codex") -> dic
 
 
 def link_artifact(title: str, related_skill_ids: list[str], actor: str = "codex") -> dict[str, Any]:
-    return record_event("artifact_linked", actor, "artifact", f"artifact-{title.lower().replace(' ', '-')}", {"title": title, "related_skill_ids": related_skill_ids}, source="mcp")
+    return create_artifact({"title": title, "related_skill_ids": related_skill_ids}, actor=actor, source="mcp")
+
+
+def list_graph_relations() -> list[dict[str, Any]]:
+    return list_relations()
+
+
+def create_graph_relation(
+    from_entity_type: str,
+    from_entity_id: str,
+    to_entity_type: str,
+    to_entity_id: str,
+    kind: str,
+    actor: str = "codex",
+) -> dict[str, Any]:
+    return create_relation(from_entity_type, from_entity_id, to_entity_type, to_entity_id, kind, actor=actor, source="mcp")
+
+
+def delete_graph_relation(relation_id: str, actor: str = "codex") -> dict[str, Any]:
+    return delete_relation(relation_id, actor=actor, source="mcp")
 
 
 def get_goal_status() -> list[dict[str, Any]]:
