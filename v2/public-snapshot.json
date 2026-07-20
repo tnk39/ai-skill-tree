@@ -1,0 +1,106 @@
+{
+  "schema_version": 3,
+  "agents": [
+    {
+      "name": "Codex",
+      "type": "agent",
+      "role": "implementation",
+      "status": "active",
+      "id": "node-57de4cf40144bdf7"
+    }
+  ],
+  "goals": [
+    {
+      "title": "Living AI Skill Graph v2",
+      "priority": 1,
+      "status": "active",
+      "id": "node-b19d5838e923f725"
+    }
+  ],
+  "skills": [
+    {
+      "name": "GitHub Pages publishing",
+      "category": "release",
+      "status": "candidate",
+      "confidence": 0.0,
+      "success_rate": 0.0,
+      "usage_count": 0,
+      "id": "node-456cd801a9faff5e"
+    },
+    {
+      "name": "Git management",
+      "category": "delivery",
+      "status": "stable",
+      "confidence": 0.85,
+      "success_rate": 0.95,
+      "usage_count": 3,
+      "id": "node-f2f3ceeca891101d"
+    },
+    {
+      "name": "Responsive design",
+      "category": "frontend",
+      "status": "trial",
+      "confidence": 0.68,
+      "success_rate": 0.8,
+      "usage_count": 1,
+      "id": "node-c75bb18e28d9940b"
+    },
+    {
+      "name": "HTML, CSS, and JavaScript",
+      "category": "frontend",
+      "status": "stable",
+      "confidence": 0.82,
+      "success_rate": 0.92,
+      "usage_count": 2,
+      "id": "node-afc6ae73a5724881"
+    },
+    {
+      "name": "Static web implementation",
+      "category": "delivery",
+      "status": "stable",
+      "confidence": 0.8,
+      "success_rate": 0.9,
+      "usage_count": 1,
+      "id": "node-96f332445e11fd7f"
+    }
+  ],
+  "tasks": [],
+  "artifacts": [],
+  "relationships": [
+    {
+      "from": "node-57de4cf40144bdf7",
+      "to": "node-456cd801a9faff5e",
+      "kind": "owns"
+    },
+    {
+      "from": "node-57de4cf40144bdf7",
+      "to": "node-f2f3ceeca891101d",
+      "kind": "owns"
+    },
+    {
+      "from": "node-57de4cf40144bdf7",
+      "to": "node-c75bb18e28d9940b",
+      "kind": "owns"
+    },
+    {
+      "from": "node-57de4cf40144bdf7",
+      "to": "node-afc6ae73a5724881",
+      "kind": "owns"
+    },
+    {
+      "from": "node-57de4cf40144bdf7",
+      "to": "node-96f332445e11fd7f",
+      "kind": "owns"
+    },
+    {
+      "from": "node-456cd801a9faff5e",
+      "to": "node-96f332445e11fd7f",
+      "kind": "depends_on"
+    },
+    {
+      "from": "node-c75bb18e28d9940b",
+      "to": "node-afc6ae73a5724881",
+      "kind": "depends_on"
+    }
+  ]
+}

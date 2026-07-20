@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Living AI Skill Graph</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">PUBLIC SNAPSHOT · NO PRIVATE PATHS OR EVENT PAYLOADS</p>
+        <h1>Living AI Skill Graph</h1>
+        <p id="summary">公開スナップショットを読み込み中...</p>
+      </div>
+      <section id="cards" aria-label="公開スナップショット集計"></section>
+    </header>
+
+    <section class="graph-layout" aria-label="公開スキルグラフ">
+      <div class="graph-panel">
+        <div class="graph-toolbar" aria-label="グラフ操作">
+          <span class="toolbar-label">関係グラフ</span>
+          <button type="button" data-action="zoom-in" aria-label="拡大">+</button>
+          <button type="button" data-action="zoom-out" aria-label="縮小">−</button>
+          <button type="button" data-action="reset-view" aria-label="表示をリセット">↺</button>
+          <span class="toolbar-hint">ドラッグで移動 · ホイールで拡大縮小</span>
+        </div>
+        <div class="graph-viewport" id="graphViewport">
+          <svg id="graph" role="img" aria-label="AI Partner Skill Graph"></svg>
+          <p id="graphEmpty" class="graph-empty" hidden>表示できるノードがありません。</p>
+        </div>
+        <ul class="legend" aria-label="ノード凡例">
+          <li><i class="legend-agent"></i>Agent</li>
+          <li><i class="legend-goal"></i>Goal</li>
+          <li><i class="legend-skill"></i>Skill</li>
+          <li><i class="legend-task"></i>Task</li>
+          <li><i class="legend-artifact"></i>Artifact</li>
+        </ul>
+      </div>
+
+      <aside class="details-panel" aria-live="polite">
+        <p class="eyebrow">SELECTED NODE</p>
+        <div id="details"><p class="muted">ノードを選択すると、安全な公開情報を表示します。</p></div>
+      </aside>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
