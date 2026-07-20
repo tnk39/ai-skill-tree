@@ -1,4 +1,17 @@
-# AI Partner Skill Tree
+# AI Partner Skill Tree / Living AI Skill Graph v2
+
+The existing root `index.html` remains the published legacy site. The v2 implementation is additive on `v2-living-skill-graph` and is local-first: SQLite is authoritative, `events.jsonl` is an audit mirror, FastAPI and stdio MCP expose the graph locally, and `public/public-snapshot.json` is a filtered static projection.
+
+## Local v2 run
+
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn server.main:app --host 127.0.0.1 --port 8765
+.\.venv\Scripts\python.exe -m pytest -q
+```
+
+No API keys, paid services, Codex auto-start, remote push, or GitHub Pages deployment is performed by v2. The local graph UI deliberately uses browser SVG rather than a D3 CDN dependency so it makes no external browser request.
+
+---
 
 AI Partner Skill Tree は、ユーザーが設定した到達目標を頂点に置き、その目標を達成するために AI パートナーが保有・獲得・検証・改善するスキルを可視化する静的 Web サイトです。
 

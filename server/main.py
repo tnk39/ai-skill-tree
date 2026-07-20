@@ -1,12 +1,21 @@
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from .database import ROOT, create_task, graph, record_event, rows
+from .snapshot import build_snapshot
 
-app = FastAPI(title="Living AI Skill Graph v2", version="2.0.0")
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    build_snapshot()
+    yield
+
+
+app = FastAPI(title="Living AI Skill Graph v2", version="2.0.0", lifespan=lifespan)
 APP_DIR = ROOT / "app"
 
 
@@ -69,6 +78,12 @@ def post_event(data: EventInput) -> dict:
 @app.get("/api/activity")
 def activity() -> list[dict]:
     return rows("events")[:50]
+
+
+@app.post("/api/snapshot")
+def make_snapshot() -> dict:
+    record_event("snapshot_published", "web", "snapshot", "public-snapshot", {}, source="api")
+    return {"path": str(build_snapshot().relative_to(ROOT))}
 
 
 app.mount("/", StaticFiles(directory=APP_DIR, html=True), name="app")

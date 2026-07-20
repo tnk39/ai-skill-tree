@@ -55,6 +55,7 @@ def get_next_unlocks() -> list[dict[str, Any]]:
 
 
 def publish_snapshot() -> dict[str, str]:
+    record_event("snapshot_published", "codex", "snapshot", "public-snapshot", {}, source="mcp")
     return {"snapshot": str(build_snapshot().name)}
 
 
