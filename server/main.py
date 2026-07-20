@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from .database import create_task, graph, record_event, rows
+from .database import ROOT, create_task, graph, record_event, rows
 
 app = FastAPI(title="Living AI Skill Graph v2", version="2.0.0")
+APP_DIR = ROOT / "app"
 
 
 class TaskInput(BaseModel):
@@ -68,3 +70,5 @@ def post_event(data: EventInput) -> dict:
 def activity() -> list[dict]:
     return rows("events")[:50]
 
+
+app.mount("/", StaticFiles(directory=APP_DIR, html=True), name="app")
