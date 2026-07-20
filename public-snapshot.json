@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "agents": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "type": "agent",
+      "role": "implementation",
+      "status": "active"
+    }
+  ],
+  "goals": [
+    {
+      "id": "goal-living-graph",
+      "title": "Living AI Skill Graph v2",
+      "priority": 1,
+      "status": "active"
+    }
+  ],
+  "skills": [
+    {
+      "id": "skill-github-pages",
+      "name": "GitHub Pages publishing",
+      "category": "release",
+      "status": "candidate",
+      "confidence": 0.0,
+      "success_rate": 0.0,
+      "usage_count": 0,
+      "owner_agent_id": "codex"
+    },
+    {
+      "id": "skill-git-management",
+      "name": "Git management",
+      "category": "delivery",
+      "status": "stable",
+      "confidence": 0.85,
+      "success_rate": 0.95,
+      "usage_count": 3,
+      "owner_agent_id": "codex"
+    },
+    {
+      "id": "skill-responsive-design",
+      "name": "Responsive design",
+      "category": "frontend",
+      "status": "trial",
+      "confidence": 0.68,
+      "success_rate": 0.8,
+      "usage_count": 1,
+      "owner_agent_id": "codex"
+    },
+    {
+      "id": "skill-html-css-js",
+      "name": "HTML, CSS, and JavaScript",
+      "category": "frontend",
+      "status": "stable",
+      "confidence": 0.82,
+      "success_rate": 0.92,
+      "usage_count": 2,
+      "owner_agent_id": "codex"
+    },
+    {
+      "id": "skill-static-web",
+      "name": "Static web implementation",
+      "category": "delivery",
+      "status": "stable",
+      "confidence": 0.8,
+      "success_rate": 0.9,
+      "usage_count": 1,
+      "owner_agent_id": "codex"
+    }
+  ],
+  "tasks": [],
+  "artifacts": []
+}
