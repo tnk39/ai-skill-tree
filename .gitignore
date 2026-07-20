@@ -9,3 +9,9 @@ node_modules/
 dist/
 build/
 coverage/
+.venv/
+__pycache__/
+.pytest_cache/
+data/skill_graph.sqlite3
+data/events.jsonl
+.test-runtime/
